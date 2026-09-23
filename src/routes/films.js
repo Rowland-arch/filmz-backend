@@ -97,6 +97,25 @@ router.put('/:id', requireAuth, (req, res) => {
   });
 });
 
+router.delete('/:id', requireAuth, (req, res) => {
+  const data = readData();
+  const filmIndex = data.films.findIndex((entry) => entry.id === req.params.id);
+
+  if (filmIndex === -1) {
+    return res.status(404).json({ message: 'Film not found' });
+  }
+
+  const filmId = req.params.id;
+
+  data.films.splice(filmIndex, 1);
+  data.ratings = data.ratings.filter((entry) => entry.filmId !== filmId);
+  data.reviews = data.reviews.filter((entry) => entry.filmId !== filmId);
+
+  writeData(data);
+
+  return res.json({ message: 'Film deleted successfully' });
+});
+
 router.post('/:id/rate', requireAuth, (req, res) => {
   const { value } = req.body;
   const ratingValue = Number(value);
