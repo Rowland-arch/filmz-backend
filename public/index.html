@@ -1,50 +1,158 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Great HD — discover licensed Ugandan translated movies, organized by genre and VJ." />
-  <meta name="theme-color" content="#090b12" />
-  <title>Great HD | Ugandan Movies, Great Stories</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="#home" aria-label="Great HD home"><span>G</span>REAT <b>HD</b></a>
-    <nav><a href="#home">Home</a><a href="#browse">Browse</a><a href="#vjs">VJs</a><a href="#about">About</a></nav>
-    <div class="header-actions"><button class="icon-button" id="searchToggle" aria-label="Search">⌕</button><button class="outline-button" id="loginButton">Sign in</button></div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Great HD — watch and download licensed Ugandan translated movies organized by genre, VJ, language and release year." />
+    <meta name="keywords" content="Great HD, Ugandan movies, translated movies, streaming platform, Ugandan VJ movies, action movies, horror movies" />
+    <meta property="og:title" content="Great HD | Ugandan Movies, Great Stories" />
+    <meta property="og:description" content="Explore cinematic Ugandan translated movies and stream the next great story with Great HD." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80" />
+    <meta name="theme-color" content="#090b12" />
+    <title>Great HD | Ugandan Movies, Great Stories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Great HD home">
+        <span>G</span>REAT <b>HD</b>
+      </a>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <p class="eyebrow"><span class="pulse"></span> THE HOME OF GREAT STORIES</p>
-        <h1>Watch stories<br /><em>that move you.</em></h1>
-        <p class="hero-copy">Stream the best licensed Ugandan translated movies, brought to life by the voices and vision of your favourite VJs.</p>
-        <div class="hero-actions"><a class="primary-button" href="#browse">Explore movies <span>→</span></a><button class="ghost-button" id="trailerButton">▶ Watch trailer</button></div>
-        <div class="hero-stats"><div><strong>4K</strong><small>Quality where available</small></div><div><strong>24/7</strong><small>Stories on demand</small></div><div><strong>100%</strong><small>Ugandan energy</small></div></div>
+      <nav aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#browse">Browse</a>
+        <a href="#vjs">VJs</a>
+        <a href="#admin">Admin</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" id="searchToggle" aria-label="Open search">⌕</button>
+        <button class="outline-button" id="loginButton">Sign in</button>
       </div>
-      <div class="hero-art"><div class="hero-glow"></div><div class="hero-poster"><div class="poster-label">GREAT <b>HD</b></div><div class="poster-copy"><small>AN ORIGINAL COLLECTION</small><strong>THE<br /><i>LAST</i><br />KINGDOM</strong><span>Every story has a voice.</span></div></div><div class="floating-card"><span class="play-dot">▶</span><div><b>Featured tonight</b><small>The Last Kingdom · 2h 08m</small></div></div></div>
-    </section>
+    </header>
 
-    <section class="browse-section" id="browse">
-      <div class="section-heading"><div><p class="eyebrow">CURATED FOR YOU</p><h2>Find your next <em>favourite.</em></h2></div><div class="search-wrap"><input id="searchInput" type="search" placeholder="Search movies, genres or VJs..." /><span>⌕</span></div></div>
-      <div class="filters" id="filters"><button class="filter active" data-filter="All">All movies</button><button class="filter" data-filter="Action">Action</button><button class="filter" data-filter="Horror">Horror</button><button class="filter" data-filter="Drama">Drama</button><button class="filter" data-filter="Comedy">Comedy</button><button class="filter" data-filter="Romance">Romance</button></div>
-      <div class="movie-grid" id="movieGrid"></div>
-      <div class="empty-state" id="emptyState" hidden>No movies match your search yet.</div>
-    </section>
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <p class="eyebrow"><span class="pulse"></span> The home of great stories</p>
+          <h1>Watch stories<br /><em>that move you.</em></h1>
+          <p class="hero-copy">
+            Stream the best licensed Ugandan translated movies, curated by genre, year, language,
+            and the VJs shaping the storytelling culture.
+          </p>
 
-    <section class="vjs-section" id="vjs"><div class="section-heading"><div><p class="eyebrow">THE VOICES BEHIND THE STORIES</p><h2>Meet the <em>VJs.</em></h2></div><a class="text-link" href="#vjs">View all VJs →</a></div><div class="vj-grid" id="vjGrid"></div></section>
+          <div class="hero-actions">
+            <a class="primary-button" href="#browse">Explore movies <span>→</span></a>
+            <button class="ghost-button" id="trailerButton">▶ Watch trailer</button>
+          </div>
 
-    <section class="admin-section" id="admin"><div><p class="eyebrow">CONTENT STUDIO</p><h2>Have a movie to share?</h2><p>Authorized administrators can publish films, add artwork, and control streaming and download availability from one simple dashboard.</p></div><button class="primary-button" id="adminButton">Open admin studio →</button></section>
-  </main>
+          <div class="hero-stats">
+            <div>
+              <strong>4K</strong>
+              <small>Quality where available</small>
+            </div>
+            <div>
+              <strong>24/7</strong>
+              <small>Stories on demand</small>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <small>Ugandan energy</small>
+            </div>
+          </div>
+        </div>
 
-  <footer id="about"><a class="brand" href="#home"><span>G</span>REAT <b>HD</b></a><p>Great stories. Great voices. Great HD.</p><small>© 2026 Great HD · Only content you have permission to distribute.</small></footer>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-poster">
+            <div class="poster-label">GREAT <b>HD</b></div>
+            <div class="poster-copy">
+              <small>AN ORIGINAL COLLECTION</small>
+              <strong>THE<br /><i>LAST</i><br />KINGDOM</strong>
+              <span>Every story has a voice.</span>
+            </div>
+          </div>
 
-  <div class="modal" id="modal" aria-hidden="true"><div class="modal-card"><button class="modal-close" id="modalClose">×</button><div id="modalContent"></div></div></div>
-  <script src="/app.js"></script>
-</body>
+          <div class="floating-card">
+            <span class="play-dot">▶</span>
+            <div>
+              <b>Featured tonight</b>
+              <small>The Last Kingdom · 2h 08m</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="browse-section" id="browse">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Curated for you</p>
+            <h2>Find your next <em>favourite.</em></h2>
+          </div>
+
+          <div class="search-wrap">
+            <input id="searchInput" type="search" placeholder="Search movies, genres or VJs..." aria-label="Search movies" />
+            <span>⌕</span>
+          </div>
+        </div>
+
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="All">All movies</button>
+          <button class="filter" data-filter="Action">Action</button>
+          <button class="filter" data-filter="Horror">Horror</button>
+          <button class="filter" data-filter="Drama">Drama</button>
+          <button class="filter" data-filter="Comedy">Comedy</button>
+          <button class="filter" data-filter="Romance">Romance</button>
+        </div>
+
+        <div class="movie-grid" id="movieGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>No movies match your search yet.</div>
+      </section>
+
+      <section class="vjs-section" id="vjs">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">The voices behind the stories</p>
+            <h2>Meet the <em>VJs.</em></h2>
+          </div>
+          <a class="text-link" href="#vjs">View all VJs →</a>
+        </div>
+
+        <div class="vj-grid" id="vjGrid"></div>
+      </section>
+
+      <section class="admin-section" id="admin">
+        <div>
+          <p class="eyebrow">Content studio</p>
+          <h2>Have a movie to share?</h2>
+          <p>
+            Great HD is built for authorized administrators who want to publish movies, add artwork,
+            control downloads, and manage every title from one central dashboard.
+          </p>
+        </div>
+        <button class="primary-button" id="adminButton">Open admin studio →</button>
+      </section>
+    </main>
+
+    <footer id="about">
+      <a class="brand" href="#home">
+        <span>G</span>REAT <b>HD</b>
+      </a>
+      <p>Great stories. Great voices. Great HD.</p>
+      <small>© 2026 Great HD · Only content you have permission to distribute.</small>
+    </footer>
+
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal-card">
+        <button class="modal-close" id="modalClose" aria-label="Close dialog">×</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
 </html>

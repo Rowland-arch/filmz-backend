@@ -5,6 +5,17 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
+function normalizeGenres(genres) {
+  if (!genres) return [];
+  if (Array.isArray(genres)) {
+    return genres.map((genre) => String(genre).trim()).filter(Boolean);
+  }
+  return String(genres)
+    .split(',')
+    .map((genre) => genre.trim())
+    .filter(Boolean);
+}
+
 function serializeFilm(film, ratings, reviews) {
   return {
     ...film,
@@ -15,8 +26,25 @@ function serializeFilm(film, ratings, reviews) {
 }
 
 router.get('/', (req, res) => {
+  const { genre, search, featured } = req.query;
   const data = readData();
-  const films = data.films.map((film) => serializeFilm(film, data.ratings, data.reviews));
+  let films = data.films.map((film) => serializeFilm(film, data.ratings, data.reviews));
+
+  if (genre) {
+    films = films.filter((film) => (film.genres || []).includes(String(genre)));
+  }
+
+  if (search) {
+    const query = String(search).toLowerCase();
+    films = films.filter((film) => {
+      const text = `${film.title} ${film.vj || ''} ${(film.genres || []).join(' ')} ${film.language || ''}`.toLowerCase();
+      return text.includes(query);
+    });
+  }
+
+  if (featured === 'true') {
+    films = films.filter((film) => film.featured === true || film.isPublished === true);
+  }
 
   return res.json({ films });
 });
@@ -35,7 +63,23 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', requireAuth, (req, res) => {
-  const { title, description, releaseYear, genres, runtime, director, posterUrl } = req.body;
+  const {
+    title,
+    description,
+    releaseYear,
+    genres,
+    runtime,
+    director,
+    posterUrl,
+    videoUrl,
+    downloadUrl,
+    trailerUrl,
+    backdropUrl,
+    vj,
+    language,
+    featured,
+    isPublished
+  } = req.body;
 
   if (!title || !description || !releaseYear || !genres) {
     return res.status(400).json({
@@ -49,10 +93,18 @@ router.post('/', requireAuth, (req, res) => {
     title,
     description,
     releaseYear: Number(releaseYear),
-    genres: Array.isArray(genres) ? genres : [genres],
+    genres: normalizeGenres(genres),
     runtime: Number(runtime || 0),
     director: director || '',
     posterUrl: posterUrl || '',
+    backdropUrl: backdropUrl || posterUrl || '',
+    videoUrl: videoUrl || '',
+    downloadUrl: downloadUrl || '',
+    trailerUrl: trailerUrl || '',
+    vj: vj || 'Great HD',
+    language: language || 'English',
+    featured: Boolean(featured),
+    isPublished: typeof isPublished === 'boolean' ? isPublished : true,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
@@ -67,7 +119,23 @@ router.post('/', requireAuth, (req, res) => {
 });
 
 router.put('/:id', requireAuth, (req, res) => {
-  const { title, description, releaseYear, genres, runtime, director, posterUrl } = req.body;
+  const {
+    title,
+    description,
+    releaseYear,
+    genres,
+    runtime,
+    director,
+    posterUrl,
+    videoUrl,
+    downloadUrl,
+    trailerUrl,
+    backdropUrl,
+    vj,
+    language,
+    featured,
+    isPublished
+  } = req.body;
   const data = readData();
   const filmIndex = data.films.findIndex((entry) => entry.id === req.params.id);
 
@@ -81,10 +149,18 @@ router.put('/:id', requireAuth, (req, res) => {
     title: title || film.title,
     description: description || film.description,
     releaseYear: releaseYear ? Number(releaseYear) : film.releaseYear,
-    genres: genres ? (Array.isArray(genres) ? genres : [genres]) : film.genres,
+    genres: genres ? normalizeGenres(genres) : film.genres,
     runtime: runtime ? Number(runtime) : film.runtime,
     director: director || film.director,
     posterUrl: posterUrl || film.posterUrl,
+    backdropUrl: backdropUrl || posterUrl || film.backdropUrl || film.posterUrl,
+    videoUrl: videoUrl || film.videoUrl || '',
+    downloadUrl: downloadUrl || film.downloadUrl || '',
+    trailerUrl: trailerUrl || film.trailerUrl || '',
+    vj: vj || film.vj || 'Great HD',
+    language: language || film.language || 'English',
+    featured: typeof featured === 'boolean' ? featured : film.featured,
+    isPublished: typeof isPublished === 'boolean' ? isPublished : film.isPublished,
     updatedAt: new Date().toISOString()
   };
 
