@@ -17,15 +17,26 @@ function sanitizeUser(user) {
 }
 
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
+  const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : '';
+  const password = typeof req.body.password === 'string' ? req.body.password : '';
 
   if (!name || !email || !password) {
     return res.status(400).json({ message: 'Name, email and password are required' });
   }
 
-  const data = readData();
+  if (name.length < 2) {
+    return res.status(400).json({ message: 'Name must be at least 2 characters' });
+  }
 
-  if (data.users.some((user) => user.email.toLowerCase() === email.toLowerCase())) {
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'Password must be at least 6 characters' });
+  }
+
+  const data = readData();
+  data.users = Array.isArray(data.users) ? data.users : [];
+
+  if (data.users.some((user) => user.email.toLowerCase() === email)) {
     return res.status(409).json({ message: 'User already exists' });
   }
 
@@ -33,7 +44,7 @@ router.post('/register', async (req, res) => {
   const newUser = {
     id: crypto.randomUUID(),
     name,
-    email: email.toLowerCase(),
+    email,
     passwordHash,
     createdAt: new Date().toISOString()
   };
